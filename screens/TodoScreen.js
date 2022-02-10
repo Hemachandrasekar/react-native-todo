@@ -1,34 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
 import { FcApproval, FcCancel } from 'react-icons/fc';
 
 const TodoScreen = ({ route }) => {
   const [todoDetail, setTodoDetail] = useState({});
+  const [isApiCalled, setIsApiCalled] = useState(false);
   const { id } = route.params;
-  //   console.log('params id', id);
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
       .then((data) => data.json())
-      .then((data) => setTodoDetail(data))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        setTodoDetail(data);
+        setIsApiCalled(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsApiCalled(true);
+      });
   }, []);
   return (
-    <View>
-      {/* <Header title="Todo Detail" /> */}
-      <View style={styles.content}>
-        <Text style={styles.text}>UserId : {todoDetail.id}</Text>
-        <Text style={styles.text}>Title : {todoDetail.title}</Text>
+    <View style={styles.container}>
+      {!isApiCalled ? (
+        <ActivityIndicator size={'large'} color={'#f4511e'} />
+      ) : (
+        <View style={styles.content}>
+          <Text style={styles.text}>UserId : {todoDetail.id}</Text>
+          <Text style={styles.text}>Title : {todoDetail.title}</Text>
 
-        <Text style={styles.text}>
-          Completed :{' '}
-          {todoDetail.completed ? (
-            <FcApproval size={20} />
-          ) : (
-            <FcCancel size={20} />
-          )}
-        </Text>
-      </View>
+          <Text style={styles.text}>
+            Completed :{' '}
+            {todoDetail.completed ? (
+              <FcApproval size={20} />
+            ) : (
+              <FcCancel size={20} />
+            )}
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -44,6 +52,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     textTransform: 'capitalize',
     borderRadius: 10,
+    width: '80%',
   },
   text: {
     fontSize: 16,
@@ -52,5 +61,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderColor: '#bbb',
     borderWidth: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

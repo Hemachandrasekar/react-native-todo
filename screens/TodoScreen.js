@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { FcApproval, FcCancel } from 'react-icons/fc';
+import { Icon } from 'react-native-elements';
 
 const TodoScreen = ({ route }) => {
   const [todoDetail, setTodoDetail] = useState({});
@@ -27,12 +27,17 @@ const TodoScreen = ({ route }) => {
           <Text style={styles.text}>UserId : {todoDetail.id}</Text>
           <Text style={styles.text}>Title : {todoDetail.title}</Text>
 
-          <Text style={styles.text}>
+          <Text style={[styles.text, styles.iconContainer]}>
             Completed :{' '}
             {todoDetail.completed ? (
-              <FcApproval size={20} />
+              <Icon
+                name="check-circle"
+                type="feather"
+                size={15}
+                color={'green'}
+              />
             ) : (
-              <FcCancel size={20} />
+              <Icon name="ban" type="font-awesome" size={15} color={'red'} />
             )}
           </Text>
         </View>
@@ -66,5 +71,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconContainer: {
+    justifyContent: 'center',
   },
 });

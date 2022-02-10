@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { Icon } from 'react-native-elements';
 import { auth, signOut } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,7 +20,7 @@ const Signout = () => {
 
   return (
     <TouchableOpacity onPress={handleSignout}>
-      <FaSignOutAlt size={30} color={'#fff'} style={{ marginRight: 20 }} />
+      <Icon name="log-out" type="feather" color={'white'} />
     </TouchableOpacity>
   );
 };

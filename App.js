@@ -5,6 +5,7 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import TodoScreen from './screens/TodoScreen';
 import Signout from './components/Signout';
+import { Icon } from 'react-native-elements';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +47,14 @@ const App = () => {
               fontWeight: 'bold',
             },
             headerRight: () => <Signout />,
-            headerLeft: () => {},
+            headerLeft: () => (
+              <Icon
+                name="home"
+                type="feather"
+                color={'white'}
+                style={{ marginRight: 10 }}
+              />
+            ),
           }}
         />
       </Stack.Navigator>
